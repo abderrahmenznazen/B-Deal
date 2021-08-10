@@ -9,12 +9,12 @@ module.exports={
         }catch(error){console.log(error.message)}
     },
     
-    findProductByName:async(req, res, next)=>{
-        const name = req.params.name;
+    findProductById:async(req, res, next)=>{
+        const id = req.params.id;
         try{
-            const product= await Product.find(name);
+            const product= await Product.findOne({_id : id });
             if (!product){
-                throw createError(404,"produit n'existe pas")
+                console.log("produit n'existe pas")
             }
             res.send(product);
         }catch(error){console.log(error.message)}
@@ -27,4 +27,27 @@ module.exports={
             res.send(result)
         }catch(error){console.log(error.message)}
     },
+
+    updateProduit:async(req, res, next)=>{
+        try{
+            const id = req.params.id;
+            const update =req.body;
+            const option ={ new: true };
+            const resulta = await Product.findByIdAndUpdate(id, update, option);
+            if (!resulta){
+                console.log("produit n'existe pas")
+            }
+            res.send(resulta);
+        }catch(error){console.log(error.message)} 
+    },
+    deleteProduit: async (req, res, next)=>{
+        const id = req.params.id;
+        try{
+            const resulta = await Product.findByIdAndDelete(id);
+            if (!resulta){
+                console.log("produit n'existe pas")
+            }
+            res.send(resulta);
+        }catch(error){console.log(error.message)}
+    }
 }
