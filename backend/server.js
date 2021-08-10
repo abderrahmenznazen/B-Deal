@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(cors())
 
 const ProductRoute = require('./routes/product.route')
-app.use('/product', ProductRoute)
+app.use('/app/product', ProductRoute)
 
 app.use((req, res, next)=>{
     console.log(`${new Date().toString()}=>${req.originalUrl}`)

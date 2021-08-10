@@ -6,11 +6,11 @@ const ProductSchema = new Schema({
         type:String,
         required:true
     },
-    price :{
-        type: Number,
+    produit_id :{
+        type: String,
         required: true
     }
-})
+});
 
-const Product = mongoose.model('restaurants',ProductSchema);
-module.exports=Product;
+const produits = mongoose.model('dbproduits', ProductSchema);
+module.exports=produits;
