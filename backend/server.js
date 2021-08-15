@@ -2,15 +2,39 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const dotenv = require('dotenv')
+const session = require ('express-session');
+const cookieParser = require('cookie-parser');
+const passport = require('passport')
+const ProductRoute = require('./routes/product.route')
+const connection = require('./index')
+const UserRoute = require('./routes/user.router')
 
+
+
+/***********connection***/
 dotenv.config();
-require('./index')();
+connection();
+
+/***************Middleware ****/
 
 app.use(express.json())
-app.use(cors())
+app.use(express.urlencoded({extended: true}));
+app.use(cors());
 
-const ProductRoute = require('./routes/product.route')
 app.use('/app/product', ProductRoute)
+
+app.use(session({
+    secret : process.env.BDEAL_PW,
+    resave : false,
+    saveUninitialized :true,
+}));
+
+app.use(cookieParser(process.env.BDEAL_PW))
+
+require('./configuration/localpassport.config')(passport)
+app.use(passport.initialize());
+app.use(passport.session)
+app.use(UserRoute)
 
 app.use((req, res, next)=>{
     console.log(`${new Date().toString()}=>${req.originalUrl}`)
