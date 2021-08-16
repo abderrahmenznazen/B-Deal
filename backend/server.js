@@ -8,6 +8,8 @@ const passport = require('passport')
 const ProductRoute = require('./routes/product.route')
 const connection = require('./index')
 const UserRoute = require('./routes/user.router')
+const passportLocal =require('passport-local').Strategy;
+
 
 
 
@@ -30,11 +32,12 @@ app.use(session({
 }));
 
 app.use(cookieParser(process.env.BDEAL_PW))
+app.use(passport.initialize());
+app.use(passport.session())
 
 require('./configuration/localpassport.config')(passport)
-app.use(passport.initialize());
-app.use(passport.session)
-app.use(UserRoute)
+
+app.use('/app/user', UserRoute)
 
 app.use((req, res, next)=>{
     console.log(`${new Date().toString()}=>${req.originalUrl}`)
