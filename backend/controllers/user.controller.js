@@ -30,7 +30,9 @@ module.exports={
                 const hashedPassword = await bcrypt.hash(req.body.password, 10);
                 const newUser = new User({
                     username: req.body.username,
-                    password: hashedPassword
+                    password: hashedPassword,
+                    userIdentifient: req.body.userIdentifient,
+                    isAdmin: req.body.isAdmin
                 })
                 await newUser.save();
                 res.send("Vous étes enregestrer avec seccés")
