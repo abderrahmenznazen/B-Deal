@@ -27,7 +27,7 @@ module.exports = function (passport){
     
     passport.deserializeUser((id, cb) =>{
     User.findById(id, (err, user) => {
-        const userInformation={username: user.username};
+        const userInformation={isAuthenticated:true ,user:{username: user.username, isAdmin: user.isAdmin, favlists:user.favlists}};
         cb(err, userInformation);
     });
     });

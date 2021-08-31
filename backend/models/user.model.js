@@ -16,10 +16,11 @@ const UserSchema = new Schema({
         required:true
     },
     isAdmin:{
-        type:Boolean,
-        required:true,
-        default:false
-    }
+        type:String,
+        enum : ['user','admin'],
+        required:true
+    },
+    favlists:[{type : mongoose.Schema.Types.ObjectId, ref:'Favoritlist'}]
 },
 {
     timestamps: true,
